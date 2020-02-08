@@ -3,12 +3,21 @@ const yaml = require("js-yaml");
 const fs = require("fs");
 const path = require("path");
 
-function isLocalizationHelperTranslataionName(focusPath) {
-  return (
+function isLocalizationHelperTranslataionName(focusPath, type) {
+  let p = focusPath.parent;
+  if (!p) {
+    return false;
+  }
+  if (type === "script" && focusPath.node.type === "StringLiteral") {
+    let isMemberExp = p.type === 'CallExpression' && p.callee && p.callee.type === "MemberExpression";
+    let hasValidCallee = isMemberExp && p.callee.property && p.callee.property.type === 'Identifier' && p.callee.property.name === "t";
+    return hasValidCallee && p.arguments.indexOf(focusPath.node) === 0;
+  }
+  return type === "template" && (
     focusPath.node.type === "StringLiteral" &&
-    (focusPath.parent.type === "MustacheStatement" ||
-      focusPath.parent.type === "SubExpression") &&
-    focusPath.parent.path.original === "t"
+    (p.type === "MustacheStatement" ||
+      p.type === "SubExpression") &&
+    p.path.original === "t"
   );
 }
 
@@ -86,10 +95,7 @@ module.exports.onComplete = function(
   _,
   { focusPath, position, results, type }
 ) {
-  if (type !== "template") {
-    return results;
-  }
-  if (isLocalizationHelperTranslataionName(focusPath)) {
+  if (isLocalizationHelperTranslataionName(focusPath, type)) {
     const items = getTranslations(_);
     const val = focusPath.node.value.indexOf("ELSCompletionDummy");
     const key = focusPath.node.value.slice(0, val);
