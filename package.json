@@ -1,6 +1,6 @@
 {
   "name": "els-intl-addon",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ember Language Server intl extension",
   "main": "index.js",
   "scripts": {
