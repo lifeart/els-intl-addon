@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`empty autocomplete should not autocomplete if no data 1`] = `Array []`;

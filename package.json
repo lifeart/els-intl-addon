@@ -1,0 +1,36 @@
+{
+  "name": "els-intl-addon",
+  "version": "1.0.0",
+  "description": "Ember Language Server intl extension",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "intl",
+    "i18n",
+    "ember",
+    "els",
+    "language-server"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lifeart/els-intl-addon.git"
+  },
+  "author": "Aleksandr Kanunnikov <lifeart92@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "flat": "^5.0.0",
+    "js-yaml": "^3.13.1"
+  },
+  "ember-language-server": {
+    "entry": "./index",
+    "debug": true,
+    "capabilities": {
+      "completionProvider": true
+    }
+  },
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
