@@ -1,6 +1,6 @@
 {
   "name": "els-intl-addon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Ember Language Server intl extension",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "flat": "^5.0.0",
-    "js-yaml": "^3.13.1"
+    "js-yaml": "^3.14.0"
   },
   "ember-language-server": {
     "entry": "./index",
@@ -30,6 +30,6 @@
     }
   },
   "devDependencies": {
-    "jest": "^24.9.0"
+    "jest": "^26.0.1"
   }
 }
