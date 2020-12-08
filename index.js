@@ -54,23 +54,31 @@ function objFromFile(filePath) {
   }
 }
 
+function recursiveIntlTranslationsSearch(hashMap, startPath) {
+  const localizations = fs.readdirSync(startPath);
+  localizations.forEach((fileName) => {
+    const extName = path.extname(fileName);
+    const localization = path.basename(fileName, extName);
+    const filePath = path.join(startPath, fileName);
+    try {
+      if (fs.lstatSync(filePath).isDirectory()) {
+        recursiveIntlTranslationsSearch(hashMap, filePath);
+      } else {
+        const file = objFromFile(filePath);
+        addToHashMap(hashMap, file, localization);
+      }
+    } catch (e) {
+      console.log("e", e);
+    }
+  });
+}
+
 function getTranslations(root) {
   const hashMap = {};
   const intlEntry = path.join(root, "translations");
   const i18nEntry = path.join(root, "app", "locales");
   if (fs.existsSync(intlEntry)) {
-    const localizations = fs.readdirSync(intlEntry);
-    localizations.forEach(fileName => {
-      const extName = path.extname(fileName);
-      const localization = path.basename(fileName, extName);
-      const filePath = path.join(intlEntry, fileName);
-      try {
-        const file = objFromFile(filePath);
-        addToHashMap(hashMap, file, localization);
-      } catch (e) {
-        console.log("e", e);
-      }
-    });
+    recursiveIntlTranslationsSearch(hashMap, intlEntry);
   } else if (fs.existsSync(i18nEntry)) {
     const localizations = fs.readdirSync(i18nEntry);
     localizations.forEach(locale => {
