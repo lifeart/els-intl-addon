@@ -105,11 +105,27 @@ module.exports.onComplete = function(
 ) {
   if (isLocalizationHelperTranslataionName(focusPath, type)) {
     const items = getTranslations(_);
-    const val = focusPath.node.value.indexOf("ELSCompletionDummy");
-    const key = focusPath.node.value.slice(0, val);
+    const PLACEHOLDER = 'ELSCompletionDummy';
+
+    let indexOfPlaceholder = focusPath.node.value.indexOf(PLACEHOLDER);
+
+    if (
+      indexOfPlaceholder === -1 &&
+      focusPath.parent &&
+      focusPath.parent.callee &&
+      focusPath.parent.callee.property
+    ) {
+      // in js call
+      indexOfPlaceholder =
+        position.character -
+        focusPath.parent.callee.property.loc.start.column -
+        3; // column start of `t` call + `t("` (3 symbols)
+    }
+
+    const key = focusPath.node.value.slice(0, indexOfPlaceholder);
     const startPosition = {
       character: position.character - key.length,
-      line: position.line
+      line: position.line,
     };
     Object.keys(items).forEach(tr => {
       const keystr = tr + items[tr].map(([_, txt]) => txt);
