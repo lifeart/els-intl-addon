@@ -33,7 +33,7 @@ function addToHashMap(hash, obj, locale) {
 
 function objFromFile(filePath) {
   const ext = path.extname(filePath);
-  if (ext === ".yaml") {
+  if ([".yaml", ".yml"].includes(ext)) {
     return yaml.safeLoad(fs.readFileSync(filePath, "utf8"));
   } else if (ext === ".json") {
     return JSON.parse(fs.readFileSync(filePath, "utf8"));
