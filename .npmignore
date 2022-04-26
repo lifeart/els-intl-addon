@@ -16,3 +16,7 @@ __snapshots__
 #editor settings
 .idea
 .editorconfig
+
+__snapshots__
+test-fixtures
+index.test.js
