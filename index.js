@@ -3,7 +3,7 @@ const yaml = require("js-yaml");
 const fs = require("fs");
 const path = require("path");
 
-function isLocalizationHelperTranslataionName(focusPath, type) {
+function isLocalizationHelperTranslationName(focusPath, type) {
   let p = focusPath.parent;
   if (!p) {
     return false;
@@ -103,7 +103,7 @@ module.exports.onComplete = function(
   _,
   { focusPath, position, results, type }
 ) {
-  if (isLocalizationHelperTranslataionName(focusPath, type)) {
+  if (isLocalizationHelperTranslationName(focusPath, type)) {
     const items = getTranslations(_);
     const PLACEHOLDER = 'ELSCompletionDummy';
 
